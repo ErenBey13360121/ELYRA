@@ -1,26 +1,31 @@
 import { redirect } from "next/navigation";
-import { getSession } from "auth/server";
-import {
-  UIMessage,
-  convertToModelMessages,
-  smoothStream,
-  streamText,
-} from "ai";
-import { customModelProvider } from "lib/ai/models";
+import { customModelProvider, isToolCallUnsupportedModel } from "lib/ai/models";
+import { mcpClientsManager } from "lib/ai/mcp/mcp-manager";
 import globalLogger from "logger";
-import { buildUserSystemPrompt } from "lib/ai/prompts";
-import { userRepository } from "lib/db/repository";
-import { colorize } from "consola/utils";
+import {
+  buildMcpServerCustomizationsSystemPrompt,
+  buildUserSystemPrompt,
+  buildToolCallUnsupportedModelSystemPrompt,
+} from "lib/ai/prompts";
+import { ChatMetadata } from "app-types/chat";
+
+import { errorIf, safe } from "ts-safe";
 
 const logger = globalLogger.withDefaults({
-  message: colorize("blackBright", `Temporary Chat API: `),
+  message: "Temporary Chat Route API: ",
 });
+
+// Placeholder implementations for removed repository functions
+export async function selectTemporaryChat(chatId) {
+  logger.info(`Selecting temporary chat with ID: ${chatId}`);
+  return { id: chatId, messages: [] };
+}
 
 export async function POST(request: Request) {
   try {
     const json = await request.json();
 
-    const session = await getSession();
+    const session = { user: { id: "default-user-id" } }; // Placeholder session
 
     if (!session?.user.id) {
       return redirect("/sign-in");

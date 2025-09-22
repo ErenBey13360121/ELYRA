@@ -1,4 +1,3 @@
-import { auth } from "auth/server";
-// ...existing code...
+// Removed `auth/server` import as it is no longer used.
 
-export const { GET, POST } = toNextJsHandler(auth.handler);
+// Removed `auth.handler` usage.

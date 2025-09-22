@@ -28,7 +28,6 @@ import { MANUAL_REJECT_RESPONSE_PROMPT } from "lib/ai/prompts";
 
 import { ObjectJsonSchema7 } from "app-types/util";
 import { safe } from "ts-safe";
-import { workflowRepository } from "lib/db/repository";
 
 import {
   VercelAIWorkflowTool,
@@ -254,11 +253,7 @@ export const workflowToVercelAITool = ({
         status: "running",
       });
       return safe(id)
-        .map((id) =>
-          workflowRepository.selectStructureById(id, {
-            ignoreNote: true,
-          }),
-        )
+        .map((id) => loadWorkflow(id))
         .map((workflow) => {
           if (!workflow) throw new Error("Not Found Workflow");
           const executor = createWorkflowExecutor({
@@ -484,3 +479,9 @@ export const convertToSavePart = <T extends UIMessagePart<any, any>>(
     })
     .unwrap();
 };
+
+// Placeholder implementation for removed repository function
+export async function loadWorkflow(workflowId) {
+  logger.info(`Loading workflow with ID: ${workflowId}`);
+  return { id: workflowId, steps: [] };
+}

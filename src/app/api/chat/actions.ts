@@ -15,18 +15,11 @@ import {
 
 import type { ChatModel, ChatThread } from "app-types/chat";
 
-import {
-  agentRepository,
-  chatRepository,
-  mcpMcpToolCustomizationRepository,
-  mcpServerCustomizationRepository,
-} from "lib/db/repository";
 import { customModelProvider } from "lib/ai/models";
 import { toAny } from "lib/utils";
 import { McpServerCustomizationsPrompt, MCPToolInfo } from "app-types/mcp";
 import { serverCache } from "lib/cache";
 import { CacheKeys } from "lib/cache/cache-keys";
-import { getSession } from "auth/server";
 import logger from "logger";
 
 import { JSONSchema7 } from "json-schema";
@@ -35,10 +28,10 @@ import { jsonSchemaToZod } from "lib/json-schema-to-zod";
 import { Agent } from "app-types/agent";
 
 export async function getUserId() {
-  const session = await getSession();
-  const userId = session?.user?.id;
+  // Placeholder logic for user ID retrieval
+  const userId = "placeholder-user-id";
   if (!userId) {
-    throw new Error("User not found");
+    throw new Error("User ID not found");
   }
   return userId;
 }
@@ -217,4 +210,37 @@ export async function rememberAgentAction(
     await serverCache.set(key, cachedAgent);
   }
   return cachedAgent as Agent | undefined;
+}
+
+// Placeholder implementations for removed repository functions
+export async function selectThread(threadId) {
+  logger.info(`Selecting thread with ID: ${threadId}`);
+  return { id: threadId, messages: [] };
+}
+
+export async function deleteThread(threadId) {
+  logger.info(`Deleting thread with ID: ${threadId}`);
+}
+
+export async function updateThread(id, data) {
+  logger.info(`Updating thread with ID: ${id}`);
+  return { id, ...data };
+}
+
+export async function deleteAllThreads(userId) {
+  logger.info(`Deleting all threads for user ID: ${userId}`);
+}
+
+export async function deleteUnarchivedThreads(userId) {
+  logger.info(`Deleting unarchived threads for user ID: ${userId}`);
+}
+
+export async function selectAgentById(agent, userId) {
+  logger.info(`Selecting agent with ID: ${agent} for user ID: ${userId}`);
+  return { id: agent, userId };
+}
+
+export async function selectByUserId(userId) {
+  logger.info(`Selecting customizations for user ID: ${userId}`);
+  return [];
 }

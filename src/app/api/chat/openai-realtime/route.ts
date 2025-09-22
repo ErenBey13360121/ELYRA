@@ -1,7 +1,5 @@
 import { NextRequest } from "next/server";
-import { getSession } from "auth/server";
 import { AllowedMCPServer, VercelAIMcpTool } from "app-types/mcp";
-import { userRepository } from "lib/db/repository";
 import {
   filterMcpServerCustomizations,
   filterMCPToolsByAllowedMCPServers,
@@ -20,6 +18,7 @@ import {
 } from "../actions";
 import globalLogger from "lib/logger";
 import { colorize } from "consola/utils";
+import { UserPreferences } from "app-types/user";
 
 const logger = globalLogger.withDefaults({
   message: colorize("blackBright", `OpenAI Realtime API: `),
@@ -36,10 +35,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const session = await getSession();
+    // Placeholder for session logic
+    const session = { user: { id: "placeholder-user-id" } };
 
-    if (!session?.user.id) {
-      return new Response("Unauthorized", { status: 401 });
+    if (!session?.user?.id) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+      });
     }
 
     const { voice, allowedMcpServers, agentId } = (await request.json()) as {
@@ -69,9 +71,13 @@ export async function POST(request: NextRequest) {
       logger.info(`No tools found`);
     }
 
-    const userPreferences = await userRepository.getPreferences(
-      session.user.id,
-    );
+    // Placeholder for user preferences
+    const userPreferences: UserPreferences = {
+      displayName: "John Doe",
+      profession: "Engineer",
+      responseStyleExample: "Concise and professional",
+      botName: "Assistant",
+    };
 
     const mcpServerCustomizations = await safe()
       .map(() => {
@@ -123,9 +129,9 @@ export async function POST(request: NextRequest) {
         "Content-Type": "application/json",
       },
     });
-  } catch (error: any) {
-    console.error("Error:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
+  } catch (error) {
+    logger.error("Failed to process OpenAI Realtime API request:", error);
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
     });
   }
