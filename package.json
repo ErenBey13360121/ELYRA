@@ -1,6 +1,6 @@
 {
   "name": "better-chatbot",
-  "version": "1.21.0",
+  "version": "1.5.2",
   "private": true,
   "author": "cgoinglove",
   "license": "MIT",
@@ -24,13 +24,11 @@
     "openai-compatiable:parse": "tsx scripts/parse-openai-compatiable.ts",
     "postinstall": "tsx scripts/postinstall.ts",
     "clean": "tsx scripts/clean.ts",
-    
     "docker-compose:up": "docker-compose -f docker/compose.yml up -d --build",
     "docker-compose:down": "docker-compose -f docker/compose.yml down",
     "docker-compose:logs": "docker-compose -f docker/compose.yml logs -f",
     "docker-compose:ps": "docker-compose -f docker/compose.yml ps",
     "docker-compose:update": "git pull && docker-compose -f docker/compose.yml up -d --build",
-
     "docker:redis": "docker run --name better-chatbot-redis -p 6379:6379 -d redis:7-alpine",
     "docker:app": "docker build -f docker/Dockerfile -t better-chatbot . && docker run -p 3000:3000 -e NO_HTTPS=1 better-chatbot",
     "prepare": "husky",
@@ -72,7 +70,6 @@
     "@tiptap/suggestion": "^2.26.1",
     "@xyflow/react": "^12.8.5",
     "ai": "^5.0.48",
-
     "chokidar": "^4.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -134,7 +131,10 @@
     "vitest": "^3.2.4"
   },
   "lint-staged": {
-    "*.{js,json,mjs,ts,yaml,tsx,css}": ["pnpm format", "pnpm lint:fix"]
+    "*.{js,json,mjs,ts,yaml,tsx,css}": [
+      "pnpm format",
+      "pnpm lint:fix"
+    ]
   },
   "packageManager": "pnpm@10.2.1",
   "engines": {
