@@ -16,6 +16,37 @@ export const FILE_BASED_MCP_CONFIG =
 export const COOKIE_KEY_SIDEBAR_STATE = "sidebar:state";
 export const COOKIE_KEY_LOCALE = "i18n:locale";
 
+export const SUPPORTED_LOCALES = [
+  {
+    code: "en",
+    name: "English 🇺🇸",
+  },
+  {
+    code: "ko",
+    name: "Korean 🇰🇷",
+  },
+  {
+    code: "ja",
+    name: "Japanese 🇯🇵",
+  },
+  {
+    code: "zh",
+    name: "Chinese 🇨🇳",
+  },
+  {
+    code: "es",
+    name: "Spanish 🇪🇸",
+  },
+  {
+    code: "fr",
+    name: "French 🇫🇷",
+  },
+  {
+    code: "tr",
+    name: "Turkish 🇹🇷",
+  }
+];
+
 export const BASE_URL = (() => {
   if (process.env.BETTER_AUTH_URL) return process.env.BETTER_AUTH_URL;
 

@@ -1,0 +1,75 @@
+{
+  "Chat": {
+    "Greeting": {
+      "goodMorning": "Günaydın {name}!",
+      "goodAfternoon": "İyi günler {name}!",
+      "goodEvening": "İyi akşamlar {name}!",
+      "niceToSeeYouAgain": "Seni tekrar görmek güzel {name}!",
+      "whatAreYouWorkingOnToday": "Bugün ne üzerinde çalışıyorsun {name}?",
+      "whatAreYouThinking": "Ne düşünüyorsun {name}?"
+    },
+    "Input": {
+      "placeholder": "Ne hakkında konuşmak istiyorsun?",
+      "sendMessage": "Mesaj gönder",
+      "regenerateResponse": "Yanıtı yeniden oluştur",
+      "stopGenerating": "Oluşturmayı durdur",
+      "clearThread": "Konuşmayı temizle",
+      "clearThreadConfirm": "Bu işlem konuşmadaki tüm mesajları silecek. Emin misin?",
+      "editMessage": "Mesajı düzenle",
+      "deleteMessage": "Mesajı sil",
+      "deleteMessageConfirm": "Bu mesajı silmek istediğinize emin misiniz?",
+      "retryMessage": "Mesajı tekrar dene"
+    },
+    "Settings": {
+      "title": "Sohbet Ayarları",
+      "model": "Model",
+      "temperature": "Sıcaklık",
+      "maxTokens": "Maksimum Token",
+      "topP": "Top P",
+      "frequencyPenalty": "Frekans Cezası",
+      "presencePenalty": "Varlık Cezası"
+    }
+  },
+  "Nav": {
+    "home": "Ana Sayfa",
+    "chat": "Sohbet",
+    "settings": "Ayarlar",
+    "darkMode": "Karanlık Mod",
+    "lightMode": "Aydınlık Mod",
+    "newChat": "Yeni Sohbet",
+    "clearConversation": "Konuşmayı Temizle",
+    "clearAll": "Tümünü Temizle"
+  },
+  "Common": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "warning": "Uyarı",
+    "info": "Bilgi",
+    "cancel": "İptal",
+    "confirm": "Onayla",
+    "save": "Kaydet",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "close": "Kapat",
+    "retry": "Tekrar Dene",
+    "copy": "Kopyala",
+    "paste": "Yapıştır",
+    "share": "Paylaş",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "sort": "Sırala",
+    "next": "İleri",
+    "previous": "Geri",
+    "start": "Başla",
+    "stop": "Dur",
+    "clear": "Temizle",
+    "reset": "Sıfırla",
+    "refresh": "Yenile",
+    "submit": "Gönder",
+    "or": "veya",
+    "and": "ve",
+    "yes": "Evet",
+    "no": "Hayır"
+  }
+}
