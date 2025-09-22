@@ -4,14 +4,25 @@ import { customModelProvider } from "lib/ai/models";
 import { CREATE_THREAD_TITLE_PROMPT } from "lib/ai/prompts";
 import globalLogger from "logger";
 import { ChatModel } from "app-types/chat";
-import { chatRepository } from "lib/db/repository";
-import { getSession } from "auth/server";
 import { colorize } from "consola/utils";
 import { handleError } from "../shared.chat";
 
 const logger = globalLogger.withDefaults({
   message: colorize("blackBright", `Title API: `),
 });
+
+// Placeholder for removed `getSession` function
+export async function getSession() {
+  logger.info("Fetching session");
+  return { user: { id: "placeholder-user-id" } };
+}
+
+// Placeholder for removed `chatRepository`
+export const chatRepository = {
+  upsertThread: async (data: { id: string; title: string; userId: string }) => {
+    logger.info("Upserting thread with placeholder data", data);
+  },
+};
 
 export async function POST(request: Request) {
   try {

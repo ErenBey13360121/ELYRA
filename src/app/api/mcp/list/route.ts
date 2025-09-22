@@ -1,6 +1,22 @@
-import { MCPServerInfo } from "app-types/mcp";
+import { MCPRemoteConfig, MCPServerInfo } from "app-types/mcp";
 import { mcpClientsManager } from "lib/ai/mcp/mcp-manager";
-import { mcpRepository } from "lib/db/repository";
+
+// Placeholder for removed `mcpRepository`
+export const mcpRepository = {
+  selectAll: async () => {
+    const placeholderConfig: MCPRemoteConfig = {
+      url: "https://example.com/sse",
+    };
+
+    return [
+      {
+        id: "placeholder-server-id",
+        name: "Placeholder Server",
+        config: placeholderConfig,
+      },
+    ];
+  },
+};
 
 export async function GET() {
   const [servers, memoryClients] = await Promise.all([

@@ -2,8 +2,18 @@
 import { mcpClientsManager } from "lib/ai/mcp/mcp-manager";
 import { z } from "zod";
 
-import { McpServerSchema } from "lib/db/pg/schema.pg";
-import { mcpOAuthRepository, mcpRepository } from "lib/db/repository";
+// Placeholder for removed `mcpOAuthRepository` and `mcpRepository`
+export const mcpOAuthRepository = {
+  getAuthenticatedSession: async (_id: string) => {
+    return { tokens: true };
+  },
+};
+
+export const mcpRepository = {
+  existsByServerName: async (_serverName: string) => {
+    return true;
+  },
+};
 
 export async function selectMcpClientsAction() {
   const list = await mcpClientsManager.getClients();
@@ -26,9 +36,7 @@ export async function selectMcpClientAction(id: string) {
   };
 }
 
-export async function saveMcpClientAction(
-  server: typeof McpServerSchema.$inferInsert,
-) {
+export async function saveMcpClientAction(server: { name: string }) {
   if (process.env.NOT_ALLOW_ADD_MCP_SERVERS) {
     throw new Error("Not allowed to add MCP servers");
   }
