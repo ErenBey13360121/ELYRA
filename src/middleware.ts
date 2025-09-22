@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { getSessionCookie } from "better-auth/cookies";
+// ...existing code...
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

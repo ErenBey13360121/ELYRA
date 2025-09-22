@@ -1,4 +1,4 @@
 import { auth } from "auth/server";
-import { toNextJsHandler } from "better-auth/next-js";
+// ...existing code...
 
 export const { GET, POST } = toNextJsHandler(auth.handler);
