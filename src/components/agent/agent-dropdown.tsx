@@ -9,7 +9,6 @@ import { useTranslations } from "next-intl";
 import { generateUUID } from "lib/utils";
 import { AgentSummary } from "app-types/agent";
 import Link from "next/link";
-import { authClient } from "auth/client";
 
 type Props = PropsWithChildren<{
   agent: AgentSummary;
@@ -20,7 +19,7 @@ type Props = PropsWithChildren<{
 export function AgentDropdown({ agent, children, side, align }: Props) {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
-  const { data: session } = authClient.useSession();
+  const session = null;
   const isOwner = session?.user?.id === agent.userId;
 
   return (

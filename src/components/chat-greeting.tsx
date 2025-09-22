@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { authClient } from "auth/client";
 import { useMemo } from "react";
 import { FlipWords } from "ui/flip-words";
 import { useTranslations } from "next-intl";
@@ -14,11 +13,9 @@ function getGreetingByTime() {
 }
 
 export const ChatGreeting = () => {
-  const { data: session } = authClient.useSession();
-
   const t = useTranslations("Chat.Greeting");
 
-  const user = session?.user;
+  const user = null;
 
   const word = useMemo(() => {
     if (!user?.name) return "";

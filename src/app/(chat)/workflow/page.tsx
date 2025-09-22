@@ -1,7 +1,5 @@
 "use client";
 import { EditWorkflowPopup } from "@/components/workflow/edit-workflow-popup";
-import { authClient } from "auth/client";
-
 import { ArrowUpRight, ChevronDown, MousePointer2 } from "lucide-react";
 
 import { Card, CardDescription, CardHeader, CardTitle } from "ui/card";

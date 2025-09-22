@@ -1,7 +1,6 @@
 "use client";
 import { useObjectState } from "@/hooks/use-object-state";
 import { UserPreferences } from "app-types/user";
-import { authClient } from "auth/client";
 import { fetcher } from "lib/utils";
 import { AlertCircle, ArrowLeft, Loader } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -44,7 +43,7 @@ export function UserInstructionsContent() {
     [],
   );
 
-  const { data: session } = authClient.useSession();
+  const session = null;
 
   const [preferences, setPreferences] = useObjectState<UserPreferences>({
     displayName: "",
