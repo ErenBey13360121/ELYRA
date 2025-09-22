@@ -26,7 +26,7 @@ import {
 import { safe } from "ts-safe";
 import { BASE_URL, IS_MCP_SERVER_REMOTE_ONLY, IS_VERCEL_ENV } from "lib/const";
 import { UnauthorizedError } from "@modelcontextprotocol/sdk/client/auth.js";
-import { PgOAuthClientProvider } from "./pg-oauth-provider";
+
 import { Transport } from "@modelcontextprotocol/sdk/shared/transport.js";
 
 type ClientOptions = {
@@ -89,14 +89,9 @@ export class MCPClient {
     if (!isMaybeRemoteConfig(this.serverConfig))
       throw new Error("OAuth flow requires a remote MCP server");
 
-    if (this.status != "authorizing" || this.oauthProvider?.state() != state) {
-      if (this.oauthProvider && this.oauthProvider.state() != state) {
-        await this.oauthProvider.adoptState(state);
-      } else {
-        await this.disconnect();
-        await this.connect(state);
-      }
-    }
+    await this.disconnect();
+    await this.connect();
+    
     const finish = (this.transport as StreamableHTTPClientTransport)
       ?.finishAuth;
 
@@ -128,29 +123,7 @@ export class MCPClient {
         }
         return this.oauthProvider;
       }
-      this.oauthProvider = new PgOAuthClientProvider({
-        name: this.name,
-        mcpServerId: this.id,
-        serverUrl: this.serverConfig.url,
-        state: oauthState,
-        _clientMetadata: {
-          client_name: `better-chatbot-${this.name}`,
-          grant_types: ["authorization_code", "refresh_token"],
-          response_types: ["code"],
-          token_endpoint_auth_method: "none", // PKCE flow
-          scope: "mcp:tools",
-          redirect_uris: [`${BASE_URL}/api/mcp/oauth/callback`],
-          software_id: "better-chatbot",
-          software_version: "1.0.0",
-        },
-        onRedirectToAuthorization: async (authorizationUrl: URL) => {
-          this.logger.info(
-            "OAuth authorization required - user interaction needed",
-          );
-          this.authorizationUrl = authorizationUrl;
-          throw new OAuthAuthorizationRequiredError(authorizationUrl);
-        },
-      });
+            // OAuth provider implementation removed
       return this.oauthProvider;
     }
     return undefined;
