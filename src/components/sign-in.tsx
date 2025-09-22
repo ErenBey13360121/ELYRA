@@ -55,8 +55,8 @@ export default function SignIn({
           onError(ctx) {
             toast.error(ctx.error.message || ctx.error.statusText);
           },
-        },
-      ),
+        }
+      )
     )
       .watch(() => setLoading(false))
       .unwrap();
@@ -67,6 +67,7 @@ export default function SignIn({
       toast.error(e.error);
     });
   };
+
   return (
     <div className="w-full h-full flex flex-col p-4 md:p-8 justify-center">
       <Card className="w-full md:max-w-md bg-background border-none mx-auto shadow-none animate-in fade-in duration-1000">
@@ -79,10 +80,11 @@ export default function SignIn({
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col">
+          {/* Email ve Şifre ile Giriş */}
           {emailAndPasswordEnabled && (
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">E-posta</Label>
                 <Input
                   id="email"
                   autoFocus
@@ -90,13 +92,13 @@ export default function SignIn({
                   value={formData.email}
                   onChange={(e) => setFormData({ email: e.target.value })}
                   type="email"
-                  placeholder="user@example.com"
+                  placeholder="erenakdeniz@icloud.com"
                   required
                 />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">Şifre</Label>
                 </div>
                 <Input
                   id="password"
@@ -126,6 +128,8 @@ export default function SignIn({
               </Button>
             </div>
           )}
+
+          {/* Sosyal Medya ile Devam Et */}
           {socialAuthenticationProviders.length > 0 && (
             <>
               {emailAndPasswordEnabled && (
@@ -171,10 +175,12 @@ export default function SignIn({
               </div>
             </>
           )}
+
+          {/* Kayıt Olma Linki */}
           {signUpEnabled && (
             <div className="my-8 text-center text-sm text-muted-foreground">
               {t("noAccount")}
-              <Link href="/sign-up" className="underline-offset-4 text-primary">
+              <Link href="/sign-up" className="underline-offset-4 text-primary font-medium hover:underline">
                 {t("signUp")}
               </Link>
             </div>

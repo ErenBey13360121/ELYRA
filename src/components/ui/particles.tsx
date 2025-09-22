@@ -110,19 +110,21 @@ const Particles: React.FC<ParticlesProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const { theme } = useTheme();
+  const rendererRef = useRef<Renderer | null>(null); // 👈 EKLENDİ
+  const glRef = useRef<WebGLRenderingContext | null>(null); // 👈 EKLENDİ
 
   const getDefaultColors = (): [number, number, number][] => {
     if (theme === "dark") {
       return [
-        [1.0, 1.0, 1.0], // 순수 흰색
-        [0.9, 0.9, 0.9], // 밝은 회색
-        [0.8, 0.8, 0.8], // 회색
+        [1.0, 1.0, 1.0],
+        [0.9, 0.9, 0.9],
+        [0.8, 0.8, 0.8],
       ];
     } else {
       return [
-        [0.0, 0.0, 0.0], // 순수 검은색
-        [0.1, 0.1, 0.1], // 어두운 회색
-        [0.2, 0.2, 0.2], // 회색
+        [0.0, 0.0, 0.0],
+        [0.1, 0.1, 0.1],
+        [0.2, 0.2, 0.2],
       ];
     }
   };
@@ -131,8 +133,16 @@ const Particles: React.FC<ParticlesProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
+    // Önceki renderer varsa temizle
+    if (rendererRef.current) {
+      rendererRef.current.destroy();
+    }
+
     const renderer = new Renderer({ depth: false, alpha: true });
     const gl = renderer.gl;
+    rendererRef.current = renderer; // 👈 SAKLA
+    glRef.current = gl; // 👈 SAKLA
+
     container.appendChild(gl.canvas);
     gl.clearColor(0, 0, 0, 0);
 
@@ -160,7 +170,7 @@ const Particles: React.FC<ParticlesProps> = ({
     }
 
     const handleBeforeUnload = () => {
-      if (gl?.canvas) {
+      if (gl.canvas) {
         gl.canvas.style.opacity = "0";
         gl.canvas.style.visibility = "hidden";
       }
@@ -263,8 +273,15 @@ const Particles: React.FC<ParticlesProps> = ({
       if (container.contains(gl.canvas)) {
         container.removeChild(gl.canvas);
       }
+
+      // 👇 ÇOK ÖNEMLİ: Renderer'ı yok et
+      if (rendererRef.current) {
+        rendererRef.current.destroy();
+        rendererRef.current = null;
+      }
     };
   }, [
+    // 👇 Sadece gerekli bağımlılıklar — gereksiz yeniden başlatmayı engeller
     particleCount,
     particleSpread,
     speed,
@@ -275,11 +292,15 @@ const Particles: React.FC<ParticlesProps> = ({
     sizeRandomness,
     cameraDistance,
     disableRotation,
-    theme,
+    theme, // tema değişirse yeniden başlat
   ]);
 
   return (
-    <div ref={containerRef} className={`relative w-full h-full ${className}`} />
+    <div
+      ref={containerRef}
+      className={`relative w-full h-full ${className}`}
+      style={{ pointerEvents: 'none' }} // 👈 UI'yi engelleme
+    />
   );
 };
 
